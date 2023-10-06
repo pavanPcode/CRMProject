@@ -14,17 +14,17 @@ def login_page(request):
         en_email = request.POST.get('Useremail')
         en_pwd = request.POST.get('Password')
         try:
-            print('try')
+            # print('try')
             data = Tblstaff.objects.get(email = en_email)
             stored_hashed_password = data.password  # Retrieve the stored hash from your database
             user_input_password = en_pwd
-            if bcrypt.checkpw(user_input_password.encode('utf-8'), stored_hashed_password.encode('utf-8')) and data.role == 2 or data.role == 4:
+            if bcrypt.checkpw(user_input_password.encode('utf-8'), stored_hashed_password.encode('utf-8')) and data.role == 2 or data.role == 3:
                 request.session['email'] = en_email
                 return redirect('dashboard')
             else:
                 return redirect('login')
         except:
-            print('except')
+            # print('except')
             return redirect('login')
     return render(request, 'login-page.html')
 
